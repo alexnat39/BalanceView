@@ -1,0 +1,45 @@
+.expenseIncomeComponentWrapper {
+    width: 100%;
+    background-color: white;
+    padding: 8px;
+    border: 1px solid #CECECF;
+    border-radius: 8px;
+}
+
+.expenseIncomeComponentTabs {
+    border-bottom: 1px solid #CECECF;
+    .MuiTabs-flexContainer {
+        width: 100%;
+    }
+    .MuiTab-root {
+        flex-grow: 1;
+        max-width: none;
+    }
+
+}
+
+.expenseIncomeComponentForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.datePicker {
+    /*width: 200px;*/
+}
+
+.fullWidth {
+    flex: 1;
+}
+
+.addButton {
+    align-self: end;
+}
+
+.formRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+}
