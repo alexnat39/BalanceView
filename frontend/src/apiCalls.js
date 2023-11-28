@@ -62,7 +62,7 @@ export const fetchAnnualIncomes = async (year) => {
             '12': 983762,
         }
 
-        // let response = await axios.get('https://myapi/annual-incomes', {
+        // let response = await axios.get('https://localhost:8080/annual-incomes', {
         //     params: {
         //         year: year,
         //     },
@@ -95,7 +95,7 @@ export const fetchAnnualExpenses = async (year) => {
             '11': 874567,
             '12': 983762,
         }
-        // let response = await axios.get('https://myapi/annual-expenses',{
+        // let response = await axios.get('https://localhost:8080/annual-expenses',{
         //     params: {
         //         year: year,
         //     },
@@ -107,5 +107,109 @@ export const fetchAnnualExpenses = async (year) => {
     } catch (error) {
         console.error(error)
         throw Error(error)
+    }
+}
+
+
+export const addTransaction = async (transactionData) => {
+    try {
+        console.log("BEFORE POST");
+        const response = await fetch('http://localhost:8080/addTransaction', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(transactionData),
+        });
+        console.log("AFTER POST response", response);
+
+        if (response.status === 200) {
+            console.log('Transaction added successfully');
+            return 0
+        } else {
+            console.error('Failed to add transaction');
+            return -1
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return -1
+
+    }
+}
+
+export const fetchTransactions = async (uid) => {
+    try {
+        console.log("Sending request to fetch transactions");
+        const response = await fetch('http://localhost:8080/getAllUserTransactions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ uid }), // Send UID in the request body as JSON
+        });
+        console.log("Response received", response);
+
+        if (response.ok) {
+            const transactions = await response.json(); // Parse the JSON response
+            console.log('Transactions fetched successfully', transactions);
+            return transactions; // Return the transactions
+        } else {
+            console.error('Failed to fetch transactions');
+            return null; // Handle error appropriately
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return null; // Handle error appropriately
+    }
+}
+
+export const deleteTransaction = async (transactionId, uid) => {
+    try {
+        const response = await fetch('http://localhost:8080/deleteTransaction', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ uid, transactionId }),
+        });
+        console.log("Response received", response);
+
+        if (response.status === 200) {
+            console.log('Transaction deleted successfully');
+            return 0;
+        } else {
+            console.error('Failed to deleted transaction.');
+            return -1;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return -1;
+    }
+}
+
+export const editTransaction = async (transactionId, transactionData) => {
+    try {
+        const response = await fetch('http://localhost:8080/ediTransaction', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                transactionId,
+                ...transactionData,
+            }),
+        });
+        console.log("Response received", response);
+
+        if (response.status === 200) {
+            console.log('Transaction edited successfully');
+            return 0;
+        } else {
+            console.error('Failed to edit transaction.');
+            return -1;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return -1;
     }
 }

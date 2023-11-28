@@ -9,7 +9,7 @@
 .navContentWrapper {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     height: 100vh;
     gap: 25px;
