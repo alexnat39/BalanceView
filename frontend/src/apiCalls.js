@@ -1,6 +1,5 @@
 import {auth} from "./firebaseConfig";
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
-import axios from 'axios';
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 

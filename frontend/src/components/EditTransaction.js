@@ -12,11 +12,9 @@ import {
     InputAdornment,
     CircularProgress
 } from '@mui/material';
-import { useUser } from "./UserContext";
-import { editTransaction } from "../apiCalls"; // Assuming you have an API call for updating
+import { editTransaction } from "../apiCalls";
 import './styles.css';
 const EditTransactionPopUp = ({ open, handleClose, transaction, setTransactions }) => {
-    const { currentUser } = useUser();
     const [tabValue, setTabValue] = useState(transaction.type);
     const [amount, setAmount] = useState(transaction.amount);
     const [note, setNote] = useState(transaction.note);
@@ -37,16 +35,16 @@ const EditTransactionPopUp = ({ open, handleClose, transaction, setTransactions 
             date: date
         };
 
-        const response = await editTransaction(transaction.id, updatedTransaction); // Update transaction API call
+        const response = await editTransaction(transaction.id, updatedTransaction);
         if (response === 0) {
             setTransactions((prevTransactions) =>
                 prevTransactions.map((t) =>
                     t.id === transaction.id ? updatedTransaction : t
                 )
             );
-            handleClose(); // Close the popup
+            handleClose();
         } else {
-            // Handle error
+
         }
         setIsLoading(false);
     };
@@ -62,7 +60,6 @@ const EditTransactionPopUp = ({ open, handleClose, transaction, setTransactions 
                     </Tabs>
                 </Box>
                 <Box component="form" className="expenseIncomeComponentForm">
-                    {/* Form elements */}
                     <TextField
                         label="Amount"
                         type="number"

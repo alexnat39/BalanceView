@@ -39,7 +39,6 @@
     align-items: center;
     justify-content: start;
     max-width: 50%;
-    /*height: calc(100vh - 64px);*/
 }
 
 .leftTransactionsWrapper {

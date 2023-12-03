@@ -22,7 +22,6 @@ const Transactions = () => {
     const [transactions, setTransactions] = useState([]);
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
     const [selectedTransaction, setSelectedTransaction] = useState(null);
-    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
     const {currentUser} = useUser();
     const socket = io('http://localhost:8080');
@@ -35,7 +34,7 @@ const Transactions = () => {
     };
     useEffect(() => {
         fetchAndSetTransactions().then(r => console.log(r));
-    }, [selectedYear]);
+    }, []);
 
     useEffect(() => {
         socket.on('transactionUpdated', () => {
@@ -59,7 +58,7 @@ const Transactions = () => {
 
     const handleCloseEditPopup = () => {
         setIsEditPopupOpen(false);
-        setSelectedTransaction(null); // Reset the selected transaction
+        setSelectedTransaction(null);
     };
 
     return (

@@ -23,7 +23,7 @@ const io = new Server(server, {
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'vAsya37340!',
+    password: "myPassword", //TODO replace it with your db password,
     database: 'balanceview'
 });
 

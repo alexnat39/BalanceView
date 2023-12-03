@@ -57,7 +57,7 @@ const Login = () => {
                     color="primary"
                     fullWidth
                     onClick={login}
-                    disabled={loading} // Disable button when loading
+                    disabled={loading}
                     style={{ marginTop: 16 }}
                 >
                     {loading ? <CircularProgress size={24} /> : "Login"}

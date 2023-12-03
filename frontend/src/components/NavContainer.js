@@ -7,7 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import {BarChart, AddBox, ExitToApp, Settings as SettingsIcon, Money, CompareArrows} from "@mui/icons-material/";
+import {BarChart, ExitToApp, Settings as SettingsIcon, CompareArrows} from "@mui/icons-material/";
 import {handleLogOut} from "../apiCalls";
 import {useNavigate} from 'react-router-dom';
 import {useEffect, useState} from "react";

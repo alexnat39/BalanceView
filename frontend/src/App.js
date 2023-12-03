@@ -5,7 +5,6 @@ import * as React from "react";
 import NavContainer from "./components/NavContainer";
 import {ThemeProvider} from '@mui/material/styles';
 import {theme} from './constants/theme'
-
 import {Routes, Route} from "react-router-dom";
 import Login from "./screens/Login";
 import SignUp from "./screens/SignUp";

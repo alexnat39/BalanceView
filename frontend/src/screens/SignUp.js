@@ -9,22 +9,21 @@ const SignUp = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false); // Loading state
+    const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
     const signUp = async () => {
         try {
-            setLoading(true); // Start loading
+            setLoading(true);
             let result = await handleSignUp(email, password);
-            setLoading(false); // Stop loading
+            setLoading(false);
             if (result === 0) {
                 navigate("/");
             }
-            // Redirect or handle success as needed
         } catch (error) {
             console.error("signUp ERR", error.message);
             setErrorMessage(error.message);
-            setLoading(false); // Stop loading on error
+            setLoading(false);
         }
     };
 
@@ -59,7 +58,7 @@ const SignUp = () => {
                     fullWidth
                     onClick={signUp}
                     style={{marginTop: 16}}
-                    disabled={loading} // Disable button when loading
+                    disabled={loading}
                 >
                     {loading ? <CircularProgress size={24}/> : "Sign Up"}
                 </Button>

@@ -2,12 +2,9 @@ import './styles.css'
 import React, {useEffect, useState} from "react";
 import {Bar} from 'react-chartjs-2';
 import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip} from "chart.js";
-import ExpenseIncomeComponent from "../components/ExpenseIncomeComponent";
-import TransactionsHistoryComponent from "../components/TransactionsHistoryComponent";
-import {deleteTransaction, fetchTransactions} from "../apiCalls";
+import {fetchTransactions} from "../apiCalls";
 import {useUser} from "../components/UserContext";
 import io from 'socket.io-client';
-import EditTransactionPopUp from "../components/EditTransaction";
 import {MenuItem, Select} from "@mui/material";
 
 ChartJS.register(

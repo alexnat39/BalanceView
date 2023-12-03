@@ -6,7 +6,6 @@ import {Button, TextField,} from "@mui/material";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import EditIcon from "@mui/icons-material/Edit";
-import {SaveAlt} from "@mui/icons-material";
 
 const Settings = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -60,6 +59,7 @@ const Settings = () => {
                                       currentlyEditingField={currentlyEditingField}
                                       setCurrentlyEditingField={setCurrentlyEditingField}
                                       handleEdit={handleEdit}
+                                      currentlyLoadingField={currentlyLoadingField}
                     />
                 </List>
             </div> : <div>Loading...</div>

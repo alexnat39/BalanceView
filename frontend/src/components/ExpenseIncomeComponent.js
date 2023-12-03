@@ -5,10 +5,6 @@ import {
     Tabs,
     TextField,
     Button,
-    Select,
-    MenuItem,
-    InputLabel,
-    FormControl,
     InputAdornment, CircularProgress
 } from '@mui/material';
 import './styles.css';
@@ -44,8 +40,6 @@ const ExpenseIncomeComponent = ({transactions}) => {
             uid: currentUser.uid,
         };
 
-
-
         try {
             setIsLoading(true);
             const response = await addTransaction(data);
@@ -53,11 +47,8 @@ const ExpenseIncomeComponent = ({transactions}) => {
                 setDate(today);
                 setNote('');
                 setAmount('');
-            } else {
-                // Handle success
             }
         } catch (error) {
-            // Handle error
         } finally {
             setIsLoading(false);
         }
