@@ -22,6 +22,9 @@ export const handleLogin = async (email, password) => {
 export const handleSignUp = async (email, password) => {
     try {
         let result = await createUserWithEmailAndPassword(auth, email, password);
+        if (result.user.uid) {
+            await addUserInformation(result.user.uid, {email: email, uid: result.user.uid, organizationName: ""})
+        }
         console.log("RESULT handleSignUp", result);
         await delay(1000);
         return 0
@@ -35,80 +38,11 @@ export const handleSignUp = async (email, password) => {
 export const handleLogOut = async () => {
     try {
         await signOut(auth);
-        // Redirect or handle success as needed
     } catch (error) {
         console.error(error.message);
         throw Error(error.message)
     }
 };
-
-
-///this function gets the incomes of the user for a specific year
-export const fetchAnnualIncomes = async (year) => {
-    try {
-        await delay(1000);
-        return {
-            '1': 120000,
-            '2': 430000,
-            '3': 270297,
-            '4': 678231,
-            '5': 203373,
-            '6': 983474,
-            '7': 9837830,
-            '8': 4884544,
-            '9': 289383,
-            '10': 334843,
-            '11': 874567,
-            '12': 983762,
-        }
-
-        // let response = await axios.get('https://localhost:8080/annual-incomes', {
-        //     params: {
-        //         year: year,
-        //     },
-        // });
-        // if (response.status === 200) {
-        //     return response.data;
-        // }
-        // return null;
-    } catch (error) {
-        console.error(error)
-        throw Error(error)
-    }
-}
-
-///this function gets the expenses of the user for a specific year
-export const fetchAnnualExpenses = async (year) => {
-    try {
-        await delay(1000);
-        return {
-            '1': 120000,
-            '2': 430000,
-            '3': 270297,
-            '4': 678231,
-            '5': 203373,
-            '6': 983474,
-            '7': 9837830,
-            '8': 4884544,
-            '9': 289383,
-            '10': 334843,
-            '11': 874567,
-            '12': 983762,
-        }
-        // let response = await axios.get('https://localhost:8080/annual-expenses',{
-        //     params: {
-        //         year: year,
-        //     },
-        // });
-        // if (response.status === 200) {
-        //     return response.data;
-        // }
-        // return null;
-    } catch (error) {
-        console.error(error)
-        throw Error(error)
-    }
-}
 
 
 export const addTransaction = async (transactionData) => {
@@ -145,21 +79,21 @@ export const fetchTransactions = async (uid) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ uid }), // Send UID in the request body as JSON
+            body: JSON.stringify({uid}),
         });
         console.log("Response received", response);
 
         if (response.ok) {
-            const transactions = await response.json(); // Parse the JSON response
+            const transactions = await response.json();
             console.log('Transactions fetched successfully', transactions);
-            return transactions; // Return the transactions
+            return transactions;
         } else {
             console.error('Failed to fetch transactions');
-            return null; // Handle error appropriately
+            return null;
         }
     } catch (error) {
         console.error('Error:', error);
-        return null; // Handle error appropriately
+        return null;
     }
 }
 
@@ -170,7 +104,7 @@ export const deleteTransaction = async (transactionId, uid) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ uid, transactionId }),
+            body: JSON.stringify({uid, transactionId}),
         });
         console.log("Response received", response);
 
@@ -189,7 +123,7 @@ export const deleteTransaction = async (transactionId, uid) => {
 
 export const editTransaction = async (transactionId, transactionData) => {
     try {
-        const response = await fetch('http://localhost:8080/ediTransaction', {
+        const response = await fetch('http://localhost:8080/editTransaction', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -211,5 +145,80 @@ export const editTransaction = async (transactionId, transactionData) => {
     } catch (error) {
         console.error('Error:', error);
         return -1;
+    }
+}
+
+export const fetchUserInformation = async (uid) => {
+    try {
+        console.log("Sending request to fetch user information");
+        const response = await fetch('http://localhost:8080/getUserInformation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({uid}),
+        });
+        console.log("Response received", response);
+        if (response.ok) {
+            const userInformation = await response.json();
+            console.log('User information fetched successfully', userInformation);
+            return userInformation[0];
+        } else {
+            console.error('Failed to fetch user information');
+            return null;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return null;
+    }
+}
+
+export const addUserInformation = async (uid, userData) => {
+    try {
+        console.log("Sending request to add user information");
+        const response = await fetch('http://localhost:8080/addUserInformation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({uid, ...userData,}),
+        });
+        console.log("Response received", response);
+        if (response.ok) {
+            const userInformation = await response.json();
+            console.log('User information fetched successfully', userInformation);
+            return userInformation;
+        } else {
+            console.error('Failed to fetch user information');
+            return null;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return null;
+    }
+}
+
+export const editUserInformation = async (uid, userData) => {
+    try {
+        console.log("Sending request to edit user information");
+        const response = await fetch('http://localhost:8080/editUserInformation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({uid, ...userData,}),
+        });
+        console.log("Response received", response);
+        if (response.ok) {
+            const userInformation = await response.json();
+            console.log('User information fetched successfully', userInformation);
+            return userInformation;
+        } else {
+            console.error('Failed to fetch user information');
+            return null;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return null;
     }
 }

@@ -3,19 +3,19 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import {BarChart, AddBox, ExitToApp, Settings as SettingsIcon} from "@mui/icons-material/";
+import {BarChart, AddBox, ExitToApp, Settings as SettingsIcon, Money, CompareArrows} from "@mui/icons-material/";
 import {handleLogOut} from "../apiCalls";
 import {useNavigate} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import {useUser} from "./UserContext";
 import Dashboard from "../screens/Dashboard";
 import Settings from "../screens/Settings";
+import Transactions from "../screens/Transactions";
+import {theme} from "../constants/theme"
 
 const drawerWidth = 240;
 
@@ -26,10 +26,11 @@ const NavContainer = () => {
 
     //if user is not logged in, then we redirect them to login screen
     useEffect(() => {
-        if (!isLoading && currentUser === null) {
+        console.log("currentUser", currentUser)
+        if (!isLoading && (!currentUser || currentUser.uid === null)) {
             navigate("/login")
         }
-    }, [currentUser, navigate]);
+    }, [currentUser, isLoading, navigate]);
 
     const logout = async () => {
         try {
@@ -41,9 +42,9 @@ const NavContainer = () => {
     }
 
     let menuIcons = {
-        'Dashboard': <BarChart/>, 'Settings': <SettingsIcon/>
+        'Dashboard': <BarChart/>, 'Settings': <SettingsIcon/>, 'Transactions': <CompareArrows/>
     }
-    const [currentPage, setCurrentPage] = useState('Dashboard');
+    const [currentPage, setCurrentPage] = useState('Transactions');
 
     return <Box sx={{display: 'flex',}}>
         <Drawer
@@ -57,8 +58,8 @@ const NavContainer = () => {
 
         >
             <Toolbar/>
-            <List>
-                {['Dashboard', 'Settings', 'Logout'].map((text, index) => {
+            <List disablePadding>
+                {['Transactions', 'Dashboard', 'Settings', 'Logout'].map((text, index) => {
                     if (text === 'Logout') {
                         return <ListItem key={text} disablePadding>
                             <ListItemButton onClick={logout}>
@@ -70,9 +71,12 @@ const NavContainer = () => {
                         </ListItem>;
                     } else {
                         return <ListItem key={text} disablePadding>
-                            <ListItemButton onClick={() => {
-                                setCurrentPage(text)
-                            }}>
+                            <ListItemButton
+                                style={{backgroundColor: (text === currentPage) ? theme.palette.secondary.main: "#FFFFFF"}}
+                                onClick={() => {
+                                    setCurrentPage(text)
+                                }}
+                            >
                                 <ListItemIcon>
                                     {menuIcons[text]}
                                 </ListItemIcon>
@@ -89,8 +93,9 @@ const NavContainer = () => {
             sx={{flexGrow: 1, bgcolor: 'background.default', p: 3}}
         >
             <Toolbar/>
-            {currentPage === 'Dashboard' && <Dashboard/>}
-            {currentPage === 'Settings' && <Settings/>}
+            {currentPage === 'Dashboard' && currentUser && <Dashboard/>}
+            {currentPage === 'Settings' && currentUser &&  <Settings/>}
+            {currentPage === 'Transactions' && currentUser && <Transactions/>}
         </Box>
     </Box>;
 }

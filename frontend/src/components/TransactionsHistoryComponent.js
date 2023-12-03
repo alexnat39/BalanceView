@@ -22,7 +22,6 @@ const TransactionsHistoryComponent = ({ transactions, onEdit, onDelete }) => {
                     <TableBody>
                         {transactions.map((transaction, index) => {
                             const formattedDate = moment(transaction.date).format('MM-DD-YYYY');
-
                             return (
                                 <TableRow key={index}>
                                     <TableCell component="th" scope="row">{formattedDate}</TableCell>

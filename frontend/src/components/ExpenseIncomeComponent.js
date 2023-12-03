@@ -16,7 +16,7 @@ import {useEffect, useState} from "react";
 import {useUser} from "./UserContext";
 import {addTransaction} from "../apiCalls";
 
-const ExpenseIncomeComponent = ({transactions, setTransactions}) => {
+const ExpenseIncomeComponent = ({transactions}) => {
     const {currentUser} = useUser();
     const [tabValue, setTabValue] = useState('expense');
     const [amount, setAmount] = useState('');
@@ -48,13 +48,8 @@ const ExpenseIncomeComponent = ({transactions, setTransactions}) => {
 
         try {
             setIsLoading(true);
-            console.log("Submitting data", data);
             const response = await addTransaction(data);
-            console.log("AFTER response", response);
             if (response === 0) {
-                console.log("BEFORE SET", transactions)
-                setTransactions([data, ...transactions])
-                console.log("AFTER SET", transactions)
                 setDate(today);
                 setNote('');
                 setAmount('');
@@ -95,7 +90,7 @@ const ExpenseIncomeComponent = ({transactions, setTransactions}) => {
                         id="date"
                         label="Date"
                         type="date"
-                        defaultValue="2023-11-26" // Consider replacing with `value={date}`
+                        defaultValue={today}
                         InputLabelProps={{ shrink: true }}
                         className="fullWidth datePicker"
                         onChange={(e) => setDate(e.target.value)}
