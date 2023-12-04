@@ -44,7 +44,6 @@ const ExpenseIncomeComponent = ({transactions}) => {
             setIsLoading(true);
             const response = await addTransaction(data);
             if (response === 0) {
-                setDate(today);
                 setNote('');
                 setAmount('');
             }
@@ -82,6 +81,7 @@ const ExpenseIncomeComponent = ({transactions}) => {
                         label="Date"
                         type="date"
                         defaultValue={today}
+                        value={date}
                         InputLabelProps={{ shrink: true }}
                         className="fullWidth datePicker"
                         onChange={(e) => setDate(e.target.value)}
