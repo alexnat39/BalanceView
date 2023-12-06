@@ -27,7 +27,8 @@ Before running the Database Steps, you need to go into backend/server.js and rep
       amount DECIMAL(10, 2),
       date DATE,
       note TEXT,
-      uid TEXT
+      uid TEXT,
+      createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );***
 
    2. ***CREATE TABLE users (
